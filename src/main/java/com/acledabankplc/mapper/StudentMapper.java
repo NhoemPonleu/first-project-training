@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
 
-    // Convert Student entity to StudentDTO
     @Mapping(source = "course.id", target = "courseId")
     StudentDTO studentToStudentDTO(Student student);
 
@@ -24,7 +23,6 @@ public interface StudentMapper {
 
     Student updateStudentFromDTO(StudentDTO studentDTO, @MappingTarget Student student);
 
-    // Method to map course ID to Course entity
     @Named("mapCourse")
     default Course mapCourse(Long courseId) {
         if (courseId == null) {
@@ -34,8 +32,6 @@ public interface StudentMapper {
         course.setId(courseId);
         return course;
     }
-
-    // Method to map Course entity to course ID
     @Named("mapCourseId")
     default Long mapCourseId(Course course) {
         return course != null ? course.getId() : null;

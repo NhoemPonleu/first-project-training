@@ -7,6 +7,7 @@ import com.acledabankplc.mapper.EnrollmentMapper;
 import com.acledabankplc.model.Course;
 import com.acledabankplc.model.Enrollment;
 import com.acledabankplc.model.Student;
+import com.acledabankplc.repository.EnrollmentDetailsDTO;
 import com.acledabankplc.repository.EnrollmentRepository;
 import com.acledabankplc.service.CourseService;
 import com.acledabankplc.service.EnrollmentService;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +44,9 @@ public class EnrollmentServiceImpl implements EnrollmentService {
        EnrollmentResponse enrollmentResponse= enrollmentMapper.toEnrollmentResponse(enrollment);
        enrollmentRepository.save(enrollment);
         return enrollmentResponse;
+    }
+    @Override
+    public List<EnrollmentDetailsDTO> getEnrollmentDetailsForStudent(Long studentId) {
+        return enrollmentRepository.findEnrollmentDetailsByStudentId(studentId);
     }
 }
