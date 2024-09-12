@@ -4,6 +4,7 @@ import com.acledabankplc.baseResponse.BaseApi;
 import com.acledabankplc.dto.CourseRequest;
 import com.acledabankplc.model.Course;
 import com.acledabankplc.service.CourseService;
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -14,12 +15,11 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/course")
-//@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN') || hasRole('MANAGER')")
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseService courseService;
     @PostMapping("/register/course")
-    @PreAuthorize("hasAuthority('admin:create')")
     public BaseApi<?>registerNewCourse(@RequestBody CourseRequest courseRequest){
        Course course =courseService.registerNewCourse(courseRequest);
         return BaseApi.builder()
@@ -31,7 +31,6 @@ public class CourseController {
                 .build();
     }
     @PutMapping("{id}")
-    @PreAuthorize("hasAuthority('admin:create')")
     public BaseApi<?>updateExistingCourse(@PathVariable("id") Long courseId, @RequestBody CourseRequest courseRequest){
         Course course =courseService.updateCourse(courseRequest,courseId);
         return BaseApi.builder()
@@ -43,7 +42,6 @@ public class CourseController {
                 .build();
     }
     @DeleteMapping("{id}")
-    @PreAuthorize("hasAuthority('admin:create')")
     public BaseApi<?>deleteCourseById(@PathVariable("id") Long courseId){
         courseService.deleteCourseById(courseId);
         return BaseApi.builder()
@@ -55,6 +53,7 @@ public class CourseController {
                 .build();
     }
     @GetMapping("/all")
+    @PermitAll
     public BaseApi<?>findAllCourse(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size

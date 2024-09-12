@@ -17,12 +17,12 @@ import java.time.LocalDateTime;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/acstudent/v1")
-//@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN') || hasRole('MANAGER')")
 public class StudentController {
     private final StudentService studentService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('admin:create') or hasAuthority('management:create')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> registerNewStudent(@RequestBody @Valid StudentDTO studentDTO) {
         StudentDTO student = studentService.registerNewStudent(studentDTO);
         return ResponseEntity.ok(student);
@@ -57,6 +57,7 @@ public class StudentController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<Page<?>> findAllStudent(
             @RequestParam(defaultValue = "0") int pageNo,
             @RequestParam(defaultValue = "10") int pageSize) {
@@ -64,6 +65,7 @@ public class StudentController {
         return ResponseEntity.ok(products);
     }
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('MANAGER')")
     public BaseApi<?> deleteStudentById(@PathVariable("id") Long studentId) {
         studentService.deleteStudentById(studentId);
         return BaseApi.builder()

@@ -30,7 +30,7 @@ public class SecurityConfiguration {
     private static final String[] WHITE_LIST_URL = {
 //            "/api/v1/auth/**",
             "/api/v1/auth/authenticate/**",
-            "/api/acstudent/v1/all/**",
+//            "/api/acstudent/v1/all/**",
             "/api/v1/cloudinary/upload/**",
             "/api/v1/products/create/**",
             "/api/v1/auth/**",
@@ -54,7 +54,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                                 req.requestMatchers(WHITE_LIST_URL)
                                         .permitAll()
-                                        .requestMatchers(POST, "/api/v1/course/register/course/**").hasAnyAuthority("ADMIN", "MANAGER")
+//                                        .requestMatchers(POST, "/api/v1/course/register/course/**").hasAnyAuthority("ADMIN", "MANAGER")
                                         .anyRequest()
                                         .authenticated()
                 )
