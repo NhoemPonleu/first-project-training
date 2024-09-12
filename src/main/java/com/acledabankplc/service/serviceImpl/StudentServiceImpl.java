@@ -1,4 +1,4 @@
-package com.acledabankplc.serviceImpl;
+package com.acledabankplc.service.serviceImpl;
 
 import com.acledabankplc.dto.StudentDTO;
 import com.acledabankplc.exception.ResourceNotFoundException;

@@ -28,9 +28,7 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     //not secure end point
     private static final String[] WHITE_LIST_URL = {
-//            "/api/v1/auth/**",
             "/api/v1/auth/authenticate/**",
-//            "/api/acstudent/v1/all/**",
             "/api/v1/cloudinary/upload/**",
             "/api/v1/products/create/**",
             "/api/v1/auth/**",
