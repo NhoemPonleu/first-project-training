@@ -1,4 +1,4 @@
-package com.acledabankplc.security.auth;
+package com.acledabankplc.config.auth;
 
 import lombok.Data;
 

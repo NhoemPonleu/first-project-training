@@ -1,4 +1,4 @@
-package com.acledabankplc.security.auditing;
+package com.acledabankplc.config.auditing;
 
 import java.util.Optional;
 

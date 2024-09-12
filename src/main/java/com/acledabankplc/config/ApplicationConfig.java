@@ -1,5 +1,5 @@
-package com.acledabankplc.security;
-import com.acledabankplc.security.auditing.ApplicationAuditAware;
+package com.acledabankplc.config;
+import com.acledabankplc.config.auditing.ApplicationAuditAware;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

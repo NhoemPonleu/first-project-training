@@ -1,6 +1,5 @@
-package com.acledabankplc.security;
+package com.acledabankplc.config;
 
-import com.acledabankplc.security.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

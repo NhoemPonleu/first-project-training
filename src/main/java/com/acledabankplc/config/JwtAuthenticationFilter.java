@@ -1,7 +1,7 @@
-package com.acledabankplc.security;
+package com.acledabankplc.config;
 
 
-import com.acledabankplc.security.token.TokenRepository;
+import com.acledabankplc.config.token.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

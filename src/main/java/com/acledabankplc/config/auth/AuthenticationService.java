@@ -1,4 +1,4 @@
-package com.acledabankplc.security.auth;
+package com.acledabankplc.config.auth;
 
 public interface AuthenticationService {
     AuthenticationResponse register(RegistrationRequest registrationRequest);

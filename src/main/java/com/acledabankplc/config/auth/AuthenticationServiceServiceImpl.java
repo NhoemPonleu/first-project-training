@@ -1,11 +1,11 @@
-package com.acledabankplc.security.auth;
+package com.acledabankplc.config.auth;
 
-import com.acledabankplc.security.JwtService;
-import com.acledabankplc.security.User;
-import com.acledabankplc.security.UserRepository;
-import com.acledabankplc.security.token.Token;
-import com.acledabankplc.security.token.TokenRepository;
-import com.acledabankplc.security.token.TokenType;
+import com.acledabankplc.config.token.Token;
+import com.acledabankplc.config.token.TokenRepository;
+import com.acledabankplc.config.token.TokenType;
+import com.acledabankplc.config.JwtService;
+import com.acledabankplc.config.User;
+import com.acledabankplc.config.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;

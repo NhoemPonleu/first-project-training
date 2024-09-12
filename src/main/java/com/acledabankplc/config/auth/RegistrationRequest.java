@@ -1,6 +1,6 @@
-package com.acledabankplc.security.auth;
+package com.acledabankplc.config.auth;
 
-import com.acledabankplc.security.Role;
+import com.acledabankplc.config.Role;
 import lombok.Data;
 
 @Data

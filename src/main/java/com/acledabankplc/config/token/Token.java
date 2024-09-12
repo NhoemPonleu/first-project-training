@@ -1,5 +1,5 @@
-package com.acledabankplc.security.token;
-import com.acledabankplc.security.User;
+package com.acledabankplc.config.token;
+import com.acledabankplc.config.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

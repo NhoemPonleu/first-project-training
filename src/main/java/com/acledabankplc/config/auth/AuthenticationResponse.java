@@ -1,4 +1,4 @@
-package com.acledabankplc.security.auth;
+package com.acledabankplc.config.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

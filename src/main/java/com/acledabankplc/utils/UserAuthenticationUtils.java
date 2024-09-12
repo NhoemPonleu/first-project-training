@@ -1,7 +1,7 @@
 package com.acledabankplc.utils;
 
 
-import com.acledabankplc.security.User;
+import com.acledabankplc.config.User;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

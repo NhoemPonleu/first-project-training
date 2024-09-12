@@ -1,6 +1,6 @@
-package com.acledabankplc.security.auditing;
+package com.acledabankplc.config.auditing;
 
-import com.acledabankplc.security.User;
+import com.acledabankplc.config.User;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

@@ -1,4 +1,4 @@
-package com.acledabankplc.security;
+package com.acledabankplc.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
