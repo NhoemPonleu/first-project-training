@@ -1,6 +1,6 @@
 package com.acledabankplc.config.auth;
 
-import com.acledabankplc.exception.EmailAlreadyExistsException;
+import com.acledabankplc.exception.AlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +19,7 @@ public class AuthenticationController {
     @PostMapping("/authentication")
     public ResponseEntity<?>registerNewUser(@RequestBody RegistrationRequest authenticationRequest){
         if (authenticationService.exist(authenticationRequest.email)){
-            throw new EmailAlreadyExistsException("Email is already in use: " + authenticationRequest.getEmail());
+            throw new AlreadyExistsException("Email is already in use: " + authenticationRequest.getEmail());
         }
        AuthenticationResponse authenticationResponse= authenticationService.register(authenticationRequest);
         return ResponseEntity.ok(authenticationResponse);

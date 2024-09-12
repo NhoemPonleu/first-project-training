@@ -1,11 +1,13 @@
 package com.acledabankplc.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "Enrollment")
+@Data
 public class Enrollment {
 
     @Id

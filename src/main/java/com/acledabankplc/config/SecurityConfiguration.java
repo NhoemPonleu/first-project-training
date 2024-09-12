@@ -27,6 +27,7 @@ public class SecurityConfiguration {
             "/api/v1/cloudinary/upload/**",
             "/api/v1/products/create/**",
             "/api/v1/auth/**",
+            "/api/v1/enrollment/**",
             "/api/v1/course/all**",
             "/register/verifyEmail",
             "/v2/api-docs",
