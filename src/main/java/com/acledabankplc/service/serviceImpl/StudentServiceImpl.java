@@ -25,15 +25,11 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final CourseService courseService;
-    private final UserAuthenticationUtils userAuthenticationUtils;
     @Override
     public StudentDTO registerNewStudent(StudentDTO studentDTO) {
-        // check if course not found
-        Course course= courseService.retrieveCourseById(studentDTO.getCourseId());
+        courseService.retrieveCourseById(studentDTO.getCourseId());
         Student student= studentMapper.studentDTOToStudent(studentDTO);
         student.setRegisterDate(LocalDate.now());
-//        student.setCreatedBy(userAuthenticationUtils.getUserRequestDTO().getUserId());
-//        student.setCreatedByUserRole(userAuthenticationUtils.getUserRequestDTO().getUserRole());
         Student savedStudent = studentRepository.save(student);
         StudentDTO studentDTO1= studentMapper.studentToStudentDTO(savedStudent);
         return studentDTO1;
@@ -53,9 +49,7 @@ public class StudentServiceImpl implements StudentService {
        Student updateStudent= studentMapper.updateStudentFromDTO(studentDTO,student);
        Course course=courseService.retrieveCourseById(studentDTO.getCourseId());
        updateStudent.setCourse(course);
-      // updateStudent.setLastModifiedBy(userAuthenticationUtils.getUserRequestDTO().getUserId());
-      // updateStudent.setUpdatedByUserRole(userAuthenticationUtils.getUserRequestDTO().getUserRole());
-        return studentRepository.save(updateStudent);
+       return studentRepository.save(updateStudent);
     }
 
     @Override

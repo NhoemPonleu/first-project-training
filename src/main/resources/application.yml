@@ -3,7 +3,7 @@ spring:
     name: todo-app
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/ac_training
+    url: jdbc:postgresql://localhost:5432/ac_trainingjf
     username: postgres
     password: ponleu
     driver-class-name: org.postgresql.Driver
