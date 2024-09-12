@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: todo-app
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ac_training
+    username: postgres
+    password: ponleu
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          format_sql: true
+    show-sql: true
+
+  main:
+    allow-circular-references: true
+#    allow-bean-definition-overriding: true  # Enable bean overriding
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
+api:
+  fakestore:
+    url: https://fakestoreapi.com/products
+logging:
+  level:
+    org.springframework.boot.web.embedded.tomcat: DEBUG
+cloudinary:
+  cloud_name: dv78eaqnh
+  api_key: 746111137433357
+  api_secret: xgZiQ5e13Wm1uIaIP5BmaIwy_xI
+
