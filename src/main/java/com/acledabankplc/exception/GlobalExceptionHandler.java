@@ -24,19 +24,21 @@ public class GlobalExceptionHandler {
         });
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException e){
+    public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException e) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errorResponse);
     }
 
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<?> handleHttpClientError(ApiException e){
+    public ResponseEntity<?> handleHttpClientError(ApiException e) {
         ErrorResponse errorResponse = new ErrorResponse(e.getStatus().getReasonPhrase(), e.getMessage());
         return ResponseEntity.status(e.getStatus())
                 .body(errorResponse);
     }
+
     @ExceptionHandler(AlreadyExistsException.class)
     public ResponseEntity<String> handleEmailAlreadyExistsException(AlreadyExistsException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);

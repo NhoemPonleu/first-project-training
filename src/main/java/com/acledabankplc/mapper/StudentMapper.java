@@ -14,7 +14,8 @@ public interface StudentMapper {
     @Mapping(source = "course.id", target = "courseId")
     StudentDTO studentToStudentDTO(Student student);
 
-    @Mapping(source = "courseId", target = "course", qualifiedByName = "mapCourse") // Maps courseId to Course entity
+    @Mapping(source = "courseId", target = "course", qualifiedByName = "mapCourse")
+        // Maps courseId to Course entity
     Student studentDTOToStudent(StudentDTO studentDTO);
 
     Student updateStudentFromDTO(StudentDTO studentDTO, @MappingTarget Student student);
@@ -28,6 +29,7 @@ public interface StudentMapper {
         course.setId(courseId);
         return course;
     }
+
     @Named("mapCourseId")
     default Long mapCourseId(Course course) {
         return course != null ? course.getId() : null;

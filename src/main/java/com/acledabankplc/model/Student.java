@@ -7,21 +7,22 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.util.Date;
+
 @Data
 @Table(name = "tbl_students")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Student extends Auditable{
+public class Student extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "first_name",length = 100,nullable = false)
+    @Column(name = "first_name", length = 100, nullable = false)
     private String firstName;
-    @Column(name = "last_name",length = 100,nullable = false)
+    @Column(name = "last_name", length = 100, nullable = false)
     private String lastName;
-    @Column(name = "phone_number",length = 11)
+    @Column(name = "phone_number", length = 11)
     private String phoneNumber;
-    @Column(name = "date_of_birth",length = 10)
+    @Column(name = "date_of_birth", length = 10)
     private Date dob;
     private String email;
     @Column(name = "date_of_register")

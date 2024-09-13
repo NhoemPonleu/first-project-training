@@ -10,7 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "course")
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class Course extends Auditable{
+public class Course extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -17,6 +17,7 @@ public class ApiService {
     @Value("${api.fakestore.url}")
     private String apiUrl;
     private final ObjectMapper objectMapper;
+
     public ApiService(RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
@@ -26,7 +27,8 @@ public class ApiService {
         String responseBody = restTemplate.getForObject(apiUrl, String.class);
         List<ThirtPartyResponse> thirtPartyResponses = null;
         try {
-            thirtPartyResponses = objectMapper.readValue(responseBody, new TypeReference<List<ThirtPartyResponse>>(){});
+            thirtPartyResponses = objectMapper.readValue(responseBody, new TypeReference<List<ThirtPartyResponse>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }

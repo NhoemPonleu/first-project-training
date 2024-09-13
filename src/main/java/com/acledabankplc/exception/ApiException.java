@@ -11,8 +11,8 @@ import org.springframework.http.HttpStatus;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiException extends RuntimeException{ 
-	
-	private HttpStatus status;
-	private String message;
+public class ApiException extends RuntimeException {
+
+    private HttpStatus status;
+    private String message;
 }

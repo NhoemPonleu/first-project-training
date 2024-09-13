@@ -19,16 +19,17 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AuthenticationServiceServiceImpl implements AuthenticationService{
+public class AuthenticationServiceServiceImpl implements AuthenticationService {
     private static final Logger logger = LogManager.getLogger(AuthenticationService.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final TokenRepository tokenRepository;
     private final AuthenticationManager authenticationManager;
+
     @Override
     public AuthenticationResponse register(RegistrationRequest registrationRequest) {
-        User user=new User();
+        User user = new User();
         user.setFirstname(registrationRequest.getFirstName());
         user.setLastname(registrationRequest.getLastName());
         user.setEmail(registrationRequest.email);
@@ -40,7 +41,7 @@ public class AuthenticationServiceServiceImpl implements AuthenticationService{
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        AuthenticationResponse authenticationResponse=new AuthenticationResponse();
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
         authenticationResponse.setAccessToken(jwtToken);
         authenticationResponse.setRefreshToken(refreshToken);
         return authenticationResponse;
@@ -49,7 +50,7 @@ public class AuthenticationServiceServiceImpl implements AuthenticationService{
 
     @Override
     public AuthenticationResponse login(AuthenticateRequest authenticateRequest) {
-        Authentication authentication= authenticationManager.authenticate(
+        Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticateRequest.getEmail(),
                         authenticateRequest.getPassword()
@@ -62,17 +63,19 @@ public class AuthenticationServiceServiceImpl implements AuthenticationService{
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-        AuthenticationResponse authenticationResponse=new AuthenticationResponse();
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
         authenticationResponse.setAccessToken(jwtToken);
         authenticationResponse.setRefreshToken(refreshToken);
         authenticationResponse.setUserName(user.getFirstname());
         authenticationResponse.setUserRole(user.getRole().name());
         return authenticationResponse;
     }
+
     @Override
-    public boolean exist(String email){
+    public boolean exist(String email) {
         return userRepository.existsByEmail(email);
     }
+
     private void saveUserToken(User user, String jwtToken) {
         var token = Token.builder()
                 .user(user)
@@ -83,6 +86,7 @@ public class AuthenticationServiceServiceImpl implements AuthenticationService{
                 .build();
         tokenRepository.save(token);
     }
+
     private void revokeAllUserTokens(User user) {
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if (validUserTokens.isEmpty())

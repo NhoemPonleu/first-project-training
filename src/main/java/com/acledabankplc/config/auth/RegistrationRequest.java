@@ -4,7 +4,7 @@ import com.acledabankplc.config.Role;
 import lombok.Data;
 
 @Data
-public class RegistrationRequest{
+public class RegistrationRequest {
     String firstName;
     String lastName;
     String email;

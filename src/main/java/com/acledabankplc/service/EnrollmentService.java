@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface EnrollmentService {
     EnrollmentResponse registerNewEnrollment(EnrollmentRequest enrollmentRequest);
+
     EnrollmentDetailsDTO getEnrollmentDetails(Long studentId);
 
 }

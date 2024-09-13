@@ -14,7 +14,10 @@ import com.acledabankplc.service.CourseService;
 import com.acledabankplc.service.EnrollmentService;
 import com.acledabankplc.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.query.sql.internal.SQLQueryParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,11 +27,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EnrollmentServiceImpl implements EnrollmentService {
+    private static final Logger logger = LoggerFactory.getLogger(CourseServiceImpl.class);
     private final EnrollmentRepository enrollmentRepository;
     private final EnrollmentMapper enrollmentMapper;
     private final StudentService studentService;
     private final CourseService courseService;
+
     @Override
     public EnrollmentResponse registerNewEnrollment(EnrollmentRequest enrollmentRequest) {
         boolean isEnrolled = enrollmentRepository.existsByStudent_IdAndCourse_Id(
@@ -37,32 +43,30 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         );
 
         if (isEnrolled) {
+            logger.info("Student is already enrolled in this course: {}", enrollmentRequest.getCourseId());
             throw new AlreadyExistsException("Student is already enrolled in this course.");
         }
-       Student student= studentService.inquiryStudentById(enrollmentRequest.getStudentId());
-       Course course=courseService.findCourseById(enrollmentRequest.getCourseId());
-       Enrollment enrollment= enrollmentMapper.toEnrollment(enrollmentRequest);
-       enrollment.setStudent(student);
-       enrollment.setCourse(course);
-       enrollment.setEnrollmentDate(LocalDate.now());
-       EnrollmentResponse enrollmentResponse= enrollmentMapper.toEnrollmentResponse(enrollment);
-       enrollmentRepository.save(enrollment);
+        Student student = studentService.inquiryStudentById(enrollmentRequest.getStudentId());
+        Course course = courseService.findCourseById(enrollmentRequest.getCourseId());
+        Enrollment enrollment = enrollmentMapper.toEnrollment(enrollmentRequest);
+        enrollment.setStudent(student);
+        enrollment.setCourse(course);
+        enrollment.setEnrollmentDate(LocalDate.now());
+        EnrollmentResponse enrollmentResponse = enrollmentMapper.toEnrollmentResponse(enrollment);
+        enrollmentRepository.save(enrollment);
         return enrollmentResponse;
     }
+
     public EnrollmentDetailsDTO getEnrollmentDetails(Long studentId) {
-        // Get the total count of courses
         Long totalCountCourse = enrollmentRepository.findTotalCourseCountByStudentId(studentId);
 
-        // Get the detailed list of course enrollments
         List<Object[]> results = enrollmentRepository.findEnrollmentDetailsByStudentId(studentId);
 
         String lastName = null;
         List<CourseDetailDTO> courseDetailList = new ArrayList<>();
-
-        // Loop through the query results and map them to DTOs
         for (Object[] result : results) {
             if (lastName == null) {
-                lastName = (String) result[2];  // Get student's last name (once)
+                lastName = (String) result[2];
             }
             CourseDetailDTO courseDetailDTO = new CourseDetailDTO(
                     (String) result[3],  // courseName

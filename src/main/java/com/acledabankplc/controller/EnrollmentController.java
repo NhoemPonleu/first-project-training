@@ -14,14 +14,16 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class EnrollmentController {
     private final EnrollmentService enrollmentService;
+
     @PostMapping
-    public ResponseEntity<?>registerEnrollment(@RequestBody EnrollmentRequest enrollmentRequest){
-      EnrollmentResponse enrollmentResponse= enrollmentService.registerNewEnrollment(enrollmentRequest);
-      return ResponseEntity.ok(enrollmentResponse);
+    public ResponseEntity<?> registerEnrollment(@RequestBody EnrollmentRequest enrollmentRequest) {
+        EnrollmentResponse enrollmentResponse = enrollmentService.registerNewEnrollment(enrollmentRequest);
+        return ResponseEntity.ok(enrollmentResponse);
     }
+
     @GetMapping("/{studentId}")
-    public ResponseEntity<?>getStudentCourse(@PathVariable("studentId") Long studentId){
-        EnrollmentDetailsDTO enrollmentResponse= enrollmentService.getEnrollmentDetails(studentId);
+    public ResponseEntity<?> getStudentCourse(@PathVariable("studentId") Long studentId) {
+        EnrollmentDetailsDTO enrollmentResponse = enrollmentService.getEnrollmentDetails(studentId);
         return ResponseEntity.ok(enrollmentResponse);
     }
 }

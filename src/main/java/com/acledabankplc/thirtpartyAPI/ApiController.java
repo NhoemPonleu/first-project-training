@@ -17,6 +17,7 @@ public class ApiController {
     public ApiController(ApiService apiService) {
         this.apiService = apiService;
     }
+
     @PreAuthorize("hasAuthority('admin:read') or hasAuthority('management:read')")
     @GetMapping("/thirtparty")
     public ResponseEntity<List<ThirtPartyResponse>> fetchFromApi2() {

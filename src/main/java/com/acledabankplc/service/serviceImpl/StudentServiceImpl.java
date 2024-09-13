@@ -25,31 +25,32 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final CourseService courseService;
+
     @Override
     public StudentDTO registerNewStudent(StudentDTO studentDTO) {
         courseService.retrieveCourseById(studentDTO.getCourseId());
-        Student student= studentMapper.studentDTOToStudent(studentDTO);
+        Student student = studentMapper.studentDTOToStudent(studentDTO);
         student.setRegisterDate(LocalDate.now());
         Student savedStudent = studentRepository.save(student);
-        StudentDTO studentDTO1= studentMapper.studentToStudentDTO(savedStudent);
+        StudentDTO studentDTO1 = studentMapper.studentToStudentDTO(savedStudent);
         return studentDTO1;
     }
 
     @Override
     public Student inquiryStudentById(Long studentId) {
-       Student student= studentRepository.findById(studentId).orElseThrow(()
-               ->new ResourceNotFoundException("student",studentId));
+        Student student = studentRepository.findById(studentId).orElseThrow(()
+                -> new ResourceNotFoundException("student", studentId));
         return student;
     }
 
     @Override
     @Transactional
-    public Student updateStudent(StudentDTO studentDTO,Long studentId) {
-       Student student= inquiryStudentById(studentId);
-       Student updateStudent= studentMapper.updateStudentFromDTO(studentDTO,student);
-       Course course=courseService.retrieveCourseById(studentDTO.getCourseId());
-       updateStudent.setCourse(course);
-       return studentRepository.save(updateStudent);
+    public Student updateStudent(StudentDTO studentDTO, Long studentId) {
+        Student student = inquiryStudentById(studentId);
+        Student updateStudent = studentMapper.updateStudentFromDTO(studentDTO, student);
+        Course course = courseService.retrieveCourseById(studentDTO.getCourseId());
+        updateStudent.setCourse(course);
+        return studentRepository.save(updateStudent);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudentById(Long studentId) {
-        Student student=inquiryStudentById(studentId);
+        Student student = inquiryStudentById(studentId);
         studentRepository.deleteById(student.getId());
     }
 }

@@ -11,5 +11,6 @@ public interface CourseMapper {
     Course courseRequestToCourse(CourseRequest courseRequest);
 
     CourseRequest courseToCourseRequest(Course course);
+
     Course updateCourseFromDto(CourseRequest courseUpdateRequest, @MappingTarget Course course);
 }

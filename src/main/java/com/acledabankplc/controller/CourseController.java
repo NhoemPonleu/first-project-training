@@ -19,9 +19,10 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseService courseService;
+
     @PostMapping("/register/course")
-    public BaseApi<?>registerNewCourse(@RequestBody CourseRequest courseRequest){
-       Course course =courseService.registerNewCourse(courseRequest);
+    public BaseApi<?> registerNewCourse(@RequestBody CourseRequest courseRequest) {
+        Course course = courseService.registerNewCourse(courseRequest);
         return BaseApi.builder()
                 .code(HttpStatus.OK.value())
                 .message("Course register Successfully")
@@ -30,9 +31,10 @@ public class CourseController {
                 .status(true)
                 .build();
     }
+
     @PutMapping("{id}")
-    public BaseApi<?>updateExistingCourse(@PathVariable("id") Long courseId, @RequestBody CourseRequest courseRequest){
-        Course course =courseService.updateCourse(courseRequest,courseId);
+    public BaseApi<?> updateExistingCourse(@PathVariable("id") Long courseId, @RequestBody CourseRequest courseRequest) {
+        Course course = courseService.updateCourse(courseRequest, courseId);
         return BaseApi.builder()
                 .code(HttpStatus.OK.value())
                 .message("Course updated Successfully")
@@ -41,8 +43,9 @@ public class CourseController {
                 .status(true)
                 .build();
     }
+
     @DeleteMapping("{id}")
-    public BaseApi<?>deleteCourseById(@PathVariable("id") Long courseId){
+    public BaseApi<?> deleteCourseById(@PathVariable("id") Long courseId) {
         courseService.deleteCourseById(courseId);
         return BaseApi.builder()
                 .code(HttpStatus.OK.value())
@@ -52,13 +55,14 @@ public class CourseController {
                 .status(true)
                 .build();
     }
+
     @GetMapping("/all")
     @PermitAll
-    public BaseApi<?>findAllCourse(
+    public BaseApi<?> findAllCourse(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
-    ){
-       Page<Course> allCourse= courseService.findAllCourse(page, size);
+    ) {
+        Page<Course> allCourse = courseService.findAllCourse(page, size);
         return BaseApi.builder()
                 .code(HttpStatus.OK.value())
                 .message("Course Find Successfully")
