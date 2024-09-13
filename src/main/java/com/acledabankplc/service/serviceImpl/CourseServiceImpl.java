@@ -32,7 +32,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Course registerNewCourse(CourseRequest courseRequest) {
            Course course= courseMapper.courseRequestToCourse(courseRequest);
-         //  course.setCreatedBy(userAuthenticationUtils.getUserRequestDTO().getUserId());
            Course course1= courseRepository.save(course);
         return course1;
     }

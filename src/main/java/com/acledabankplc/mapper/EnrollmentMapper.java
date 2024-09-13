@@ -12,12 +12,10 @@ public interface EnrollmentMapper {
 
     EnrollmentMapper INSTANCE = Mappers.getMapper(EnrollmentMapper.class);
 
-    // Map EnrollmentRequest to Enrollment
     @Mapping(target = "student.id", source = "studentId")
     @Mapping(target = "course.id", source = "courseId")
     Enrollment toEnrollment(EnrollmentRequest enrollmentRequest);
 
-    // Map Enrollment to EnrollmentResponse
     @Mapping(source = "course.courseName", target = "courseName")
     @Mapping(source = "student.firstName", target = "studentName")
     @Mapping(source = "student.id", target = "studentId")

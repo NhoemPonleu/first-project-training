@@ -3,14 +3,10 @@ package com.acledabankplc.mapper;
 import com.acledabankplc.dto.StudentDTO;
 import com.acledabankplc.model.Course;
 import com.acledabankplc.model.Student;
-import com.acledabankplc.repository.CourseRepository;
-import com.acledabankplc.service.CourseService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
