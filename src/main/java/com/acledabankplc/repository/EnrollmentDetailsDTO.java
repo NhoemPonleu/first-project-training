@@ -4,14 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class EnrollmentDetailsDTO {
-
-    private Long enrollmentId;
-    private LocalDate enrollmentDate;
     private String lastName;
-    private String courseName;
+    private Long totalCountCourse;
+
+    private List<CourseDetailDTO> courseDetailDTOList;
 }

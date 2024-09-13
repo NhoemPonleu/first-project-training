@@ -7,15 +7,19 @@ import com.acledabankplc.mapper.EnrollmentMapper;
 import com.acledabankplc.model.Course;
 import com.acledabankplc.model.Enrollment;
 import com.acledabankplc.model.Student;
+import com.acledabankplc.repository.CourseDetailDTO;
 import com.acledabankplc.repository.EnrollmentDetailsDTO;
 import com.acledabankplc.repository.EnrollmentRepository;
 import com.acledabankplc.service.CourseService;
 import com.acledabankplc.service.EnrollmentService;
 import com.acledabankplc.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.query.sql.internal.SQLQueryParser;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,8 +49,33 @@ public class EnrollmentServiceImpl implements EnrollmentService {
        enrollmentRepository.save(enrollment);
         return enrollmentResponse;
     }
-    @Override
-    public List<EnrollmentDetailsDTO> getEnrollmentDetailsForStudent(Long studentId) {
-        return enrollmentRepository.findEnrollmentDetailsByStudentId(studentId);
+    public EnrollmentDetailsDTO getEnrollmentDetails(Long studentId) {
+        // Get the total count of courses
+        Long totalCountCourse = enrollmentRepository.findTotalCourseCountByStudentId(studentId);
+
+        // Get the detailed list of course enrollments
+        List<Object[]> results = enrollmentRepository.findEnrollmentDetailsByStudentId(studentId);
+
+        String lastName = null;
+        List<CourseDetailDTO> courseDetailList = new ArrayList<>();
+
+        // Loop through the query results and map them to DTOs
+        for (Object[] result : results) {
+            if (lastName == null) {
+                lastName = (String) result[2];  // Get student's last name (once)
+            }
+            CourseDetailDTO courseDetailDTO = new CourseDetailDTO(
+                    (String) result[3],  // courseName
+                    (Long) result[0],    // enrollmentId
+                    (Date) result[1]     // enrollmentDate
+            );
+
+            // Add each course to the list
+            courseDetailList.add(courseDetailDTO);
+        }
+
+        // Return the final DTO with the student's last name, total course count, and list of courses
+        return new EnrollmentDetailsDTO(lastName, totalCountCourse, courseDetailList);
     }
+
 }

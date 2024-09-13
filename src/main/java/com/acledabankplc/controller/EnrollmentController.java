@@ -21,8 +21,8 @@ public class EnrollmentController {
       return ResponseEntity.ok(enrollmentResponse);
     }
     @GetMapping("/{studentId}")
-    public ResponseEntity<?>getStudentCourse(@PathVariable Long studentId){
-        List<EnrollmentDetailsDTO> enrollmentResponse= enrollmentService.getEnrollmentDetailsForStudent(studentId);
+    public ResponseEntity<?>getStudentCourse(@PathVariable("studentId") Long studentId){
+        EnrollmentDetailsDTO enrollmentResponse= enrollmentService.getEnrollmentDetails(studentId);
         return ResponseEntity.ok(enrollmentResponse);
     }
 }
