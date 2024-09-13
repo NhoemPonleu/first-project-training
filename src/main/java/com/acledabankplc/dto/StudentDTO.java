@@ -14,5 +14,4 @@ public class StudentDTO {
     private Date dob;
     @ValidEmail
     private String email;
-    private Long courseId;
 }

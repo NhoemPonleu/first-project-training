@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "tbl_students")
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Student extends Auditable {
+public class Student{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,14 +22,11 @@ public class Student extends Auditable {
     private String lastName;
     @Column(name = "phone_number", length = 11)
     private String phoneNumber;
-    @Column(name = "date_of_birth", length = 10)
-    private Date dob;
+//    @Column(name = "date_of_birth", length = 10)
+//    private Date dob;
     private String email;
-    @Column(name = "date_of_register")
-    private LocalDate registerDate;
-    @ManyToOne
-    @JoinColumn(name = "course_id")
-    private Course course;
+//    @Column(name = "date_of_register")
+//    private LocalDate registerDate;
 
 
 }

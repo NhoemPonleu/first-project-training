@@ -64,6 +64,7 @@ public class StudentController {
         Page<Student> products = studentService.findAllStudents(pageNo, pageSize);
         return ResponseEntity.ok(products);
     }
+
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('MANAGER')")
     public BaseApi<?> deleteStudentById(@PathVariable("id") Long studentId) {

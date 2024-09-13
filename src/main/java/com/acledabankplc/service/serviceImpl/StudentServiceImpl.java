@@ -28,9 +28,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDTO registerNewStudent(StudentDTO studentDTO) {
-        courseService.retrieveCourseById(studentDTO.getCourseId());
         Student student = studentMapper.studentDTOToStudent(studentDTO);
-        student.setRegisterDate(LocalDate.now());
+      //  student.setRegisterDate(LocalDate.now());
         Student savedStudent = studentRepository.save(student);
         StudentDTO studentDTO1 = studentMapper.studentToStudentDTO(savedStudent);
         return studentDTO1;
@@ -48,8 +47,6 @@ public class StudentServiceImpl implements StudentService {
     public Student updateStudent(StudentDTO studentDTO, Long studentId) {
         Student student = inquiryStudentById(studentId);
         Student updateStudent = studentMapper.updateStudentFromDTO(studentDTO, student);
-        Course course = courseService.retrieveCourseById(studentDTO.getCourseId());
-        updateStudent.setCourse(course);
         return studentRepository.save(updateStudent);
     }
 

@@ -36,10 +36,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course registerNewCourse(CourseRequest courseRequest) {
-        logger.info("Registering new course with request: {}", courseRequest);
+//        logger.info("Registering new course with request: {}", courseRequest);
         Course course = courseMapper.courseRequestToCourse(courseRequest);
         Course course1 = courseRepository.save(course);
-        logger.info("Successfully registered new course: {}", course1);
+//        logger.info("Successfully registered new course: {}", course1);
         return course1;
     }
 
