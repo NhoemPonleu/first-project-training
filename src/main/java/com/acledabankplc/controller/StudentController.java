@@ -1,18 +1,14 @@
 package com.acledabankplc.controller;
 
-import com.acledabankplc.baseResponse.BaseApi;
 import com.acledabankplc.dto.StudentDTO;
 import com.acledabankplc.model.Student;
 import com.acledabankplc.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,31 +25,19 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public BaseApi<?> inquiryStudentById(@PathVariable("id") Long studentId) {
+    public ResponseEntity<?> inquiryStudentById(@PathVariable("id") Long studentId) {
         Student student = studentService.inquiryStudentById(studentId);
-        return BaseApi.builder()
-                .code(HttpStatus.OK.value())
-                .message("Student Inquiry Successfully")
-                .timeStamp(LocalDateTime.now())
-                .data(student)
-                .status(true)
-                .build();
+        return ResponseEntity.ok(student);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('admin:update') or hasAuthority('management:update')")
-    public BaseApi<?> updateStudent(
+    public ResponseEntity<?> updateStudent(
             @PathVariable("id") Long studentId,
             @RequestBody StudentDTO studentDTO) {
 
         Student updatedStudent = studentService.updateStudent(studentDTO, studentId);
-        return BaseApi.builder()
-                .code(HttpStatus.OK.value())
-                .message("Student Updated Successfully")
-                .timeStamp(LocalDateTime.now())
-                .data(updatedStudent)
-                .status(true)
-                .build();
+        return ResponseEntity.ok(updatedStudent);
     }
 
     @GetMapping("/all")
@@ -67,13 +51,8 @@ public class StudentController {
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('MANAGER')")
-    public BaseApi<?> deleteStudentById(@PathVariable("id") Long studentId) {
+    public ResponseEntity<?> deleteStudentById(@PathVariable("id") Long studentId) {
         studentService.deleteStudentById(studentId);
-        return BaseApi.builder()
-                .code(HttpStatus.OK.value())
-                .message("Student deleted Successfully")
-                .timeStamp(LocalDateTime.now())
-                .status(true)
-                .build();
+        return ResponseEntity.ok("Data has been Deleted");
     }
 }
