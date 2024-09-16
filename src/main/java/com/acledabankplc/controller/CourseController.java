@@ -1,6 +1,5 @@
 package com.acledabankplc.controller;
 
-import com.acledabankplc.baseResponse.BaseApi;
 import com.acledabankplc.dto.CourseRequest;
 import com.acledabankplc.model.Course;
 import com.acledabankplc.service.CourseService;
