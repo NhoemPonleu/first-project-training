@@ -1,6 +1,7 @@
 package com.acledabankplc.log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,12 +15,18 @@ public class LoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    // Create an ObjectMapper instance
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    // Create an ObjectMapper instance and register JavaTimeModule
+    private final ObjectMapper objectMapper;
+    private int requestCount=0;
+    public LoggingAspect() {
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule()); // Register the module here
+    }
 
-    @Around("execution(* com.acledabankplc.controller..*(..))") // Pointcut for all controller methods
+    @Around("execution(* com.acledabankplc.controller..*(..))")
     public Object logExecutionDetails(ProceedingJoinPoint joinPoint) throws Throwable {
-        // Log requestData (method parameters) as JSON
+        requestCount++;
+        logger.info("Total requests processed: {}", requestCount);
         Object[] requestData = joinPoint.getArgs();
         try {
             String requestJson = objectMapper.writeValueAsString(requestData);
@@ -30,12 +37,10 @@ public class LoggingAspect {
 
         long start = System.currentTimeMillis();
 
-        // Proceed with the method execution
         Object responseData = joinPoint.proceed();
 
         long executionTime = System.currentTimeMillis() - start;
 
-        // Log responseData as JSON
         try {
             String responseJson = objectMapper.writeValueAsString(responseData);
             logger.info("Method {} returned responseData: {} in {} ms", joinPoint.getSignature(), responseJson, executionTime);
