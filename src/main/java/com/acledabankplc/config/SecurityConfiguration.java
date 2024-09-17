@@ -28,6 +28,7 @@ public class SecurityConfiguration {
             "/api/v1/products/create/**",
             "/api/v1/auth/**",
             "/api/v1/enrollment/**",
+            "/api/v1/thirt-party/**",
             "/api/v1/course/all**",
             "/register/verifyEmail",
             "/v2/api-docs",
@@ -44,19 +45,16 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(req ->
-                                req.requestMatchers(WHITE_LIST_URL)
-                                        .permitAll()
-//                                        .requestMatchers(POST, "/api/v1/course/register/course/**").hasAnyAuthority("ADMIN", "MANAGER")
-                                        .anyRequest()
-                                        .authenticated()
+                .csrf(AbstractHttpConfigurer::disable)  // Disable CSRF for stateless APIs
+                .cors(Customizer.withDefaults())         // Enable default CORS configuration
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers(WHITE_LIST_URL).permitAll()  // Whitelist specific URLs
+                        .anyRequest().authenticated()  // All other requests must be authenticated
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))  // Stateless session using JWT
+                .authenticationProvider(authenticationProvider)  // Use the custom AuthenticationProvider
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);  // Add JWT filter before UsernamePasswordAuthenticationFilter
+
         return http.build();
     }
-
 }
