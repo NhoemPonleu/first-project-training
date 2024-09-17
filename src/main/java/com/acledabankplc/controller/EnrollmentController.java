@@ -2,10 +2,10 @@ package com.acledabankplc.controller;
 
 import com.acledabankplc.dto.EnrollmentRequest;
 import com.acledabankplc.dto.EnrollmentResponse;
-import com.acledabankplc.repository.EnrollmentDetailsDTO;
+import com.acledabankplc.dto.EnrollmentDetailsDTO;
 import com.acledabankplc.service.EnrollmentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ public class EnrollmentController {
     private final EnrollmentService enrollmentService;
 
     @PostMapping
-    public ResponseEntity<?> registerEnrollment(@RequestBody EnrollmentRequest enrollmentRequest) {
+    public ResponseEntity<?> registerEnrollment(@RequestBody @Valid EnrollmentRequest enrollmentRequest) {
         EnrollmentResponse enrollmentResponse = enrollmentService.registerNewEnrollment(enrollmentRequest);
         return ResponseEntity.ok(enrollmentResponse);
     }

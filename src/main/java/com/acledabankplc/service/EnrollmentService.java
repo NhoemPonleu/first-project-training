@@ -2,9 +2,7 @@ package com.acledabankplc.service;
 
 import com.acledabankplc.dto.EnrollmentRequest;
 import com.acledabankplc.dto.EnrollmentResponse;
-import com.acledabankplc.repository.EnrollmentDetailsDTO;
-
-import java.util.List;
+import com.acledabankplc.dto.EnrollmentDetailsDTO;
 
 public interface EnrollmentService {
     EnrollmentResponse registerNewEnrollment(EnrollmentRequest enrollmentRequest);

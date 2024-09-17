@@ -44,7 +44,6 @@ cloudinary:
 logging:
   level:
     root: INFO
-
   file:
     path: ./logs/application.log   # Log output to a file
     max-size: 10MB                 # Max size for the log file
@@ -53,3 +52,5 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"  # Custom log pattern for the console
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"  # Custom log pattern for file
+
+

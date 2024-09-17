@@ -1,4 +1,4 @@
-package com.acledabankplc.repository;
+package com.acledabankplc.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

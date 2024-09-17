@@ -1,14 +1,18 @@
 package com.acledabankplc.controller;
 
+import com.acledabankplc.baseResponse.BaseApi;
 import com.acledabankplc.dto.StudentDTO;
 import com.acledabankplc.model.Student;
 import com.acledabankplc.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,9 +23,15 @@ public class StudentController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> registerNewStudent(@RequestBody @Valid StudentDTO studentDTO) {
+    public BaseApi<?> registerNewStudent(@RequestBody @Valid StudentDTO studentDTO) {
         StudentDTO student = studentService.registerNewStudent(studentDTO);
-        return ResponseEntity.ok(student);
+        return BaseApi.builder()
+                .code(HttpStatus.OK.value())
+                .message("Student registered successfully")
+                .timeStamp(LocalDateTime.now())
+                .data(student)
+                .status(true)
+                .build();
     }
 
     @GetMapping("{id}")

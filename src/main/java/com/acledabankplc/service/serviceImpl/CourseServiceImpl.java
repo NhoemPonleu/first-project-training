@@ -1,6 +1,7 @@
 package com.acledabankplc.service.serviceImpl;
 
 import com.acledabankplc.dto.CourseRequest;
+import com.acledabankplc.exception.BusinessException;
 import com.acledabankplc.exception.ResourceNotFoundException;
 import com.acledabankplc.mapper.CourseMapper;
 import com.acledabankplc.model.Course;
@@ -36,10 +37,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course registerNewCourse(CourseRequest courseRequest) {
-//        logger.info("Registering new course with request: {}", courseRequest);
+        if ("009".equals(courseRequest.getCourseCode())) {
+            throw new BusinessException("Simulated error during course registration.");
+        }
+        logger.info("Registering new course with request: {}", courseRequest);
         Course course = courseMapper.courseRequestToCourse(courseRequest);
         Course course1 = courseRepository.save(course);
-//        logger.info("Successfully registered new course: {}", course1);
+        logger.info("Successfully registered new course: {}", course1);
         return course1;
     }
 

@@ -10,6 +10,7 @@ public class StudentDTO {
     @NotBlank(message = "Name is mandatory")
     private String firstName;
     private String lastName;
+    @NotBlank(message = "Phone Number is mandatory")
     private String phoneNumber;
     private Date dob;
     @ValidEmail

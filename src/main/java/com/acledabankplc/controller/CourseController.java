@@ -1,9 +1,12 @@
 package com.acledabankplc.controller;
 
+import com.acledabankplc.baseResponse.BaseApi;
 import com.acledabankplc.dto.CourseRequest;
+import com.acledabankplc.dto.StudentDTO;
 import com.acledabankplc.model.Course;
 import com.acledabankplc.service.CourseService;
 import jakarta.annotation.security.PermitAll;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -21,9 +24,42 @@ public class CourseController {
     private final CourseService courseService;
 
     @PostMapping("/register/course")
-    public ResponseEntity<Course> registerNewCourse(@RequestBody CourseRequest courseRequest) {
-        Course course = courseService.registerNewCourse(courseRequest);
-        return new ResponseEntity<>(course,HttpStatus.CREATED);
+//    public BaseApi<?> registerCourse(@RequestBody CourseRequest courseRequest) {
+//        try {
+//            Course savedCourse = courseService.registerNewCourse(courseRequest);
+//            BaseApi<Course> response = BaseApi.<Course>builder()
+//                    .message("Course registered successfully")
+//                    .code(HttpStatus.OK.value())
+//                    .status(true)
+//                    .timeStamp(LocalDateTime.now())
+//                    .data(savedCourse)
+//                    .build();
+//
+//            return response;
+//        } catch (Exception e) {
+//            BaseApi<?> response = BaseApi.<Object>builder()
+//                    .message("Failed to register course: " + e.getMessage())
+//                    .code(HttpStatus.BAD_REQUEST.value())
+//                    .status(false)
+//                    .timeStamp(LocalDateTime.now())
+//                    .data(null)
+//                    .build();
+//
+//            return response;
+//        }
+//    }
+    public ResponseEntity<BaseApi<?>> registerCourse(@RequestBody CourseRequest courseRequest) {
+        Course savedCourse = courseService.registerNewCourse(courseRequest);
+
+        BaseApi<Course> response = BaseApi.<Course>builder()
+                .message("Course registered successfully")
+                .code(HttpStatus.OK.value())
+                .status(true)
+                .timeStamp(LocalDateTime.now())
+                .data(savedCourse)
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("{id}")
