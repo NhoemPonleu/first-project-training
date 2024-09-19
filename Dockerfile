@@ -1,14 +1,16 @@
-# Use a base image with JDK
-FROM openjdk:17-jdk
-
-# Set the working directory
+#
+# Build stage
+#
+FROM maven:3.8.3-openjdk-17 AS build
 WORKDIR /app
+COPY . /app/
+RUN mvn clean package
 
-# Copy the application JAR file
-COPY target/acleda_training_project-0.0.1-SNAPSHOT.jar /app/acleda_training_project-0.0.1-SNAPSHOT.jar
-
-# Expose the application port
+#
+# Package stage
+#
+FROM openjdk:17-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar /app/app.jar
 EXPOSE 8080
-
-# Run the application
-ENTRYPOINT ["java", "-jar", "acleda_training_project-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
