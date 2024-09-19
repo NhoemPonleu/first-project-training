@@ -56,16 +56,17 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         return enrollmentResponse;
     }
 
-    public EnrollmentDetailsDTO getEnrollmentDetails(Long studentId) {
-        Long totalCountCourse = enrollmentRepository.findTotalCourseCountByStudentId(studentId);
+    public EnrollmentDetailsDTO getEnrollmentDetails(Long studentId, String courseName, String lastName) {
+        Student student= studentService.inquiryStudentById(studentId);
+        Long totalCountCourse = enrollmentRepository.findTotalCourseCountByStudentId(student.getId());
 
-        List<Object[]> results = enrollmentRepository.findEnrollmentDetailsByStudentId(studentId);
+        List<Object[]> results = enrollmentRepository.findEnrollmentDetailsByStudentId(studentId,courseName,lastName);
 
-        String lastName = null;
+        String lastName1 = null;
         List<CourseDetailDTO> courseDetailList = new ArrayList<>();
         for (Object[] result : results) {
-            if (lastName == null) {
-                lastName = (String) result[2];
+            if (lastName1 == null) {
+                lastName1 = (String) result[2];
             }
             CourseDetailDTO courseDetailDTO = new CourseDetailDTO(
                     (String) result[3],  // courseName
@@ -78,7 +79,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
         }
 
         // Return the final DTO with the student's last name, total course count, and list of courses
-        return new EnrollmentDetailsDTO(lastName, totalCountCourse, courseDetailList);
+        return new EnrollmentDetailsDTO(lastName1, totalCountCourse, courseDetailList);
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.WebRequest;
 
 import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
@@ -17,7 +18,22 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    // Handle Internal Server Error (500)
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<?> handleInternalServerError(RuntimeException ex, WebRequest request) {
 
+        // Custom response body
+        BaseApi<Object> response = BaseApi.builder()
+                .message("An internal error occurred: " + ex.getMessage())
+                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .status(false)
+                .timeStamp(LocalDateTime.now())
+                .data(null)
+                .build();
+
+        // Return the custom response with status 500
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -34,13 +50,6 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.FORBIDDEN)
                 .body("Access Denied: " + e.getMessage());
     }
-
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<?> handleException(Exception e) {
-//        return ResponseEntity
-//                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                .body("An error occurred: " + e.getMessage());
-//    }
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException e) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), e.getMessage());

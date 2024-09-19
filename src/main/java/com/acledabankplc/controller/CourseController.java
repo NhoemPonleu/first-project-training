@@ -5,6 +5,8 @@ import com.acledabankplc.dto.CourseRequest;
 import com.acledabankplc.dto.StudentDTO;
 import com.acledabankplc.model.Course;
 import com.acledabankplc.service.CourseService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +22,13 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/v1/course")
 @PreAuthorize("hasRole('ADMIN') || hasRole('MANAGER')")
 @RequiredArgsConstructor
+@Tag(name = "Course Controller",
+        description = "Controller to handle Course Operations.")
 public class CourseController {
     private final CourseService courseService;
+
+    @Operation(summary = "Post Data",
+            description = "This endpoint provides user submit data.")
 
     @PostMapping("/register/course")
 //    public BaseApi<?> registerCourse(@RequestBody CourseRequest courseRequest) {

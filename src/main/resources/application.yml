@@ -1,25 +1,25 @@
 spring:
   application:
     name: todo-app
-
   datasource:
-    url: jdbc:postgresql://localhost:5432/ac_trainingjf
-    username: postgres
-    password: ponleu
+    url: jdbc:postgresql://dpg-cr22b30gph6c73bel5o0-a.singapore-postgres.render.com:5432/dbcustomer
+    username: dbcustomer_user
+    password: 2EHz41n4zfKwZU9H9yjnVE5onR3GZy9Y
     driver-class-name: org.postgresql.Driver
-
   jpa:
     hibernate:
       ddl-auto: update
       properties:
         hibernate:
-          dialect: org.hibernate.dialect.PostgreSQLDialect
           format_sql: true
     show-sql: true
 
   main:
     allow-circular-references: true
-#    allow-bean-definition-overriding: true  # Enable bean overriding
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false  # Correct format without comment inline
 
 application:
   security:
@@ -28,14 +28,26 @@ application:
       expiration: 86400000
       refresh-token:
         expiration: 604800000
+
 api:
   fakestore:
     url: https://fakestoreapi.com/products
-logging:
-  level:
-    org.springframework.boot.web.embedded.tomcat: DEBUG
+
 cloudinary:
   cloud_name: dv78eaqnh
   api_key: 746111137433357
   api_secret: xgZiQ5e13Wm1uIaIP5BmaIwy_xI
+
+logging:
+  level:
+    root: INFO
+  file:
+    path: ./logs/application.log   # Log output to a file
+    max-size: 10MB                 # Max size for the log file
+    max-history: 30                # Keep 30 archived logs
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"  # Custom log pattern for the console
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"  # Custom log pattern for file
+
 
