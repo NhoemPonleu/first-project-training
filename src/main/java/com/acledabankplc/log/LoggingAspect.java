@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -80,11 +79,18 @@ public class LoggingAspect {
 
             // Log the method name as the action and whether it succeeded or not
             String action = joinPoint.getSignature().getName();
-            userLoggingService.logUserAction(username, action, actionSuccessYN, Integer.valueOf(userId));
+            Integer userIdInteger = null;
+            if (userId != null) {
+                try {
+                    userIdInteger = Integer.valueOf(userId);
+                } catch (NumberFormatException e) {
+                    logger.warn("Failed to parse userId to Integer: {}", userId, e);
+                }
+            }
+            userLoggingService.logUserAction(username, action, actionSuccessYN, userIdInteger);
             requestCount.incrementAndGet();
         }
 
         return responseData;
     }
-
 }

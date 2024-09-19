@@ -60,7 +60,7 @@ public class StudentController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('MANAGER')")
+//    @PreAuthorize("hasRole('MANAGER')")
     @Operation(summary = "Find All Student"
             , description = "This endpoint Allow Role Manager To Find ALl information Students")
     public ResponseEntity<Page<?>> findAllStudent(

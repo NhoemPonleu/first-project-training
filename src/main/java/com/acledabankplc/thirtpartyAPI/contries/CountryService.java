@@ -25,16 +25,26 @@ public class CountryService {
 
     public List<Country> filterCountries(String official, String common) {
         List<Country> countries = getCountries();
+
         return countries.stream()
                 .filter(country -> {
+                    boolean matchesOfficial = true;
+                    boolean matchesCommon = true;
+
+                    // Check official filter
                     if (official != null && !official.isEmpty()) {
-                        return country.getName().getOfficial().toLowerCase().contains(official.toLowerCase());
+                        matchesOfficial = country.getName().getOfficial().toLowerCase().contains(official.toLowerCase());
                     }
+
+                    // Check common filter
                     if (common != null && !common.isEmpty()) {
-                        return country.getName().getCommon().toLowerCase().contains(common.toLowerCase());
+                        matchesCommon = country.getName().getCommon().toLowerCase().contains(common.toLowerCase());
                     }
-                    return true;
+
+                    // Return true only if both conditions are met (or if they are not set)
+                    return matchesOfficial && matchesCommon;
                 })
                 .collect(Collectors.toList());
     }
+
 }

@@ -1,9 +1,13 @@
 package com.acledabankplc.thirtpartyAPI.contries;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.*;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Country {
 
     private Name name;

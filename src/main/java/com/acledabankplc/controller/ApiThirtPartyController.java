@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/thirt-party")
+@RequestMapping("/api/v1/third-party")
 @Tag(name = "Thirt Party Controller"
         , description = "Controller to Get Another API .")
 
@@ -30,8 +30,8 @@ public class ApiThirtPartyController {
         this.countryService = countryService;
     }
 
-    @PreAuthorize("hasAuthority('admin:read') or hasAuthority('management:read')")
-    @GetMapping("/thirtparty")
+   // @PreAuthorize("hasAuthority('admin:read') or hasAuthority('management:read')")
+    @GetMapping("/thirdparty")
     @Operation(summary = "Get Product"
             , description = "This endpoint To Get Product On API Public to Test On Our System .")
     public ResponseEntity<List<ThirtPartyResponse>> fetchFromApi2() {
@@ -40,6 +40,7 @@ public class ApiThirtPartyController {
 
     @Operation(summary = "Get Countries"
             , description = "This endpoint Get All Information About Countries in The world From Public API.")
+
     @GetMapping("/countries")
     public List<Country> getCountries(
             @RequestParam(required = false) String official,
