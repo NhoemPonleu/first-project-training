@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 ),
                 @Server(
                         description = "PROD ENV",
-                        url = "https://config-batchshedule.onrender.com/"
+                        url = "https://first-project-training.onrender.com/"
                 )
         },
         security = {
